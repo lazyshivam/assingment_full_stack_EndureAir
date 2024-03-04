@@ -1,23 +1,32 @@
-import logo from './logo.svg';
+import { useEffect, useState } from 'react';
 import './App.css';
-
+import TodoItems from './components/TodoItems';
+import axios from 'axios'
 function App() {
+
+  const [data, setData] = useState(null);
+   
+  const url = 'http://localhost:5000/user/getItems';
+  
+  useEffect( () => {
+    fetch(url,{mode:'no-cors'}).then((result) => {
+     
+          result.json();
+        
+    }).then((data) => {
+      console.log("Data: ", data);
+      // setData(data);
+    }).catch((err) => {
+      console.error("Error in fetching data " + err);
+       })
+   
+  //  getData()
+  }, []);
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+       <TodoItems/>
     </div>
   );
 }
